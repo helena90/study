@@ -1,0 +1,13 @@
+arguments=
+auto.sync=false
+build.scans.enabled=false
+connection.gradle.distribution=GRADLE_DISTRIBUTION(VERSION(6.9.2))
+connection.project.dir=
+eclipse.preferences.version=1
+gradle.user.home=
+java.home=/Users/helena/develop/sdk/zulu11.56.19-ca-jdk11.0.15-macosx_x64
+jvm.arguments=
+offline.mode=false
+override.workspace.settings=true
+show.console.view=false
+show.executions.view=false

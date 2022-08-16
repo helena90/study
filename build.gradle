@@ -1,0 +1,101 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	ext {
+		lombokVersion = '1.18.24'
+	}
+}
+
+
+plugins {
+    id 'java-library'
+    id 'org.springframework.boot' version '2.6.8'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'study'
+version = '0.0.1'
+description = 'study'
+sourceCompatibility = 11
+targetCompatibility = 11
+
+// 소스 인코딩 지정방법 1
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+// 소스 인코딩 지정밥법 2
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+configurations {
+	//	log4j lib 변경시 spring거하고 충돌나서 그냥 제외해버리고 spring-boot-starter-log4j2를 추가함
+	all*.exclude module : 'spring-boot-starter-logging'
+}
+
+bootJar {
+   archiveFileName = "study.jar"
+}
+
+
+dependencies {
+
+	implementation project(':py-service-api-core')
+	implementation ('org.springframework.boot:spring-boot-starter-web') {
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+	}
+	implementation ('org.springframework.boot:spring-boot-starter-undertow') {
+		exclude group: 'io.undertow', module: 'undertow-websockets-jsr'
+	}
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-amqp'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.0.4.RELEASE'
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+
+	runtimeOnly group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.9.1'
+	runtimeOnly group: 'org.aspectj', name: 'aspectjtools', version: '1.9.9.1'
+	runtimeOnly group: 'org.aspectj', name: 'aspectjrt', version: '1.9.9.1'
+	implementation group: 'org.jdom', name: 'jdom2', version:'2.0.6.1'
+	implementation group: 'org.ow2.asm', name: 'asm', version: '9.3'
+	implementation group: 'cglib', name: 'cglib', version: '3.3.0'
+
+	implementation 'com.zaxxer:HikariCP:5.0.1'
+	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.29'
+	implementation "org.mybatis:mybatis:3.5.10"
+	implementation "org.mybatis:mybatis-spring:2.0.7"
+
+//	implementation ('org.web3j:core:4.9.2')
+
+	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '3.0.0'
+
+	// https://mvnrepository.com/artifact/com.google.guava/guava
+
+
+	// https://mvnrepository.com/artifact/org.jsoup/jsoup
+	implementation group: 'org.jsoup', name: 'jsoup', version: '1.14.3'
+
+
+	// tymeleaf
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+
+
+	compileOnly("org.projectlombok:lombok:${lombokVersion}")
+    testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
+    annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+    testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+
+	testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.8.2'
+}
